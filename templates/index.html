@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network Expressiveness Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Depth and Width in Neural Nets</h1>
+    <label for="layers">Layers:</label>
+    <input type="number" id="layers" value="3"><br><br>
+    <label for="width">Width:</label>
+    <input type="number" id="width" value="10"><br><br>
+    <button onclick="trainModel()">Train Model</button>
+    <img id="plot" src="" alt="Model Plot">
+    <script>
+        function trainModel() {
+            const layers = document.getElementById('layers').value;
+            const width = document.getElementById('width').value;
+            axios.post('/train', {
+                layers: layers,
+                width: width
+            }).then(function (response) {
+                document.getElementById('plot').src = 'data:image/png;base64,' + response.data.image;
+            }).catch(function (error) {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
